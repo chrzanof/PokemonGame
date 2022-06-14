@@ -46,6 +46,16 @@ void Creature::setExp(double exp) {
     EXP = exp;
 }
 
-Creature::Creature(const std::string &name, int strength, double dexterity, double hp, double exp,
-                   const Elemental &elemental) : name(name), strength(strength), dexterity(dexterity), HP(hp), EXP(exp),
+Creature::Creature(const std::string &name, int strength, double dexterity, double hp,
+                   const Elemental &elemental) : name(name), strength(strength), dexterity(dexterity), HP(hp), EXP(0),
                                                  elemental(elemental) {}
+
+const Elemental &Creature::getElemental() const {
+    return elemental;
+}
+
+void Creature::setElemental(const Elemental &elemental) {
+    Creature::elemental = elemental;
+}
+
+

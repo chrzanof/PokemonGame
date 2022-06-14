@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "Elemental.h"
+#include "Creature.h"
 class Creature {
     std::string name;
     int strength;
@@ -15,9 +16,10 @@ class Creature {
     double HP;
     double EXP;
     Elemental elemental;
+    Creature* nextForm;
 
 public:
-    Creature(const std::string &name, int strength, double dexterity, double hp, double exp,
+    Creature(const std::string &name, int strength, double dexterity, double hp,
              const Elemental &elemental);
 
     const std::string &getName() const;
@@ -39,6 +41,11 @@ public:
     double getExp() const;
 
     void setExp(double exp);
+
+    const Elemental &getElemental() const;
+
+    void setElemental(const Elemental &elemental);
+
 
 };
 

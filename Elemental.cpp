@@ -46,13 +46,13 @@ void Elemental::addStrength(Elemental elemental) {
  */
 double Elemental::returnModifier(const Elemental &elemental) {
 
-    for (auto & weaknesses : weaknesses) {
-        if(elemental.getName().compare(weaknesses.getName())) {
+    for (auto & weakness : weaknesses) {
+        if(elemental.getName() == weakness.getName()) {
             return WEAKNESS_MODIFIER;
         }
     }
     for (auto & strength : strengths) {
-        if(elemental.getName().compare(strength.getName())) {
+        if(elemental.getName() == strength.getName()) {
             return STRENGTH_MODIFIER;
         }
     }
