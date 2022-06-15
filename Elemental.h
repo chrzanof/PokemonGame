@@ -36,6 +36,8 @@ public:
 
     double returnModifier(const Elemental &elemental);
 
+
+
 };
 
 
