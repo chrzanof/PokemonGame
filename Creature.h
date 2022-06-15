@@ -17,7 +17,6 @@ class Creature {
     double HP;
     double EXP;
     Elemental elemental;
-    Creature* nextForm;
     int level;
 
 public:
@@ -47,10 +46,6 @@ public:
     const Elemental &getElemental() const;
 
     void setElemental(const Elemental &elemental);
-
-    Creature *getNextForm() const;
-
-    void setNextForm(Creature *nextForm);
 
     int getLevel() const;
 

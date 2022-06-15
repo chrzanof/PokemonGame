@@ -21,37 +21,31 @@ int main() {
     steel.setWeaknesses({fire, steel});
     steel.setStrengths({water, earth});
 
-    Creature squirtle = Creature("Squirtle", 30, 30, 30, water,1);
-    Creature bulbasaur = Creature("Bulbasaur", 30, 30, 30, earth,1);
+    Creature squirtle = Creature("Squirtle", 30, 30, 40, water,1);
+    Creature bulbasaur = Creature("Bulbasaur", 35, 30, 35, earth,1);
     Creature pidgey = Creature("Pidgey", 30,40,30,air,1);
-    Creature charmander = Creature("Charmander",40,40,30,fire,1);
-    Creature swinub = Creature("Swinub", 30, 30, 30, ice,1);
-    Creature magnemite = Creature("Magnemite", 30, 30, 20, steel,1);
-
-    Creature wartortle = Creature("Wartortle", 40, 35,40, water,2);
+    Creature charmander = Creature("Charmander",40,30,30,fire,1);
+    Creature swinub = Creature("Swinub", 30, 40, 30, ice,1);
+    Creature magnemite = Creature("Magnemite", 40, 40, 20, steel,1);
+    Creature caterpie = Creature("Caterpie",20,40,40,earth,1);
+    Creature psyduck = Creature("Psyduck",35,35,30,water,1);
+    Creature zubat = Creature("Zubat", 30, 40,30,air,1);
+    Creature vulpix = Creature("Vulpix",30,40,30,fire,1);
+    Creature seel = Creature("Seel", 30,30,40,ice,1);
+    Creature aron = Creature("Aron",50,20,30,steel,1);
+    Creature wartortle = Creature("Wartortle", 40, 35,45, water,2);
     Creature blastoise = Creature("Blastoise", 50, 40, 50, water,3);
-    wartortle.setNextForm(&blastoise);
-    squirtle.setNextForm(&wartortle);
     Creature ivysaur = Creature("Ivysaur",40,40,40,earth,2);
-    Creature venusaur = Creature("Venusaur",50,50,50,earth,3);
-    ivysaur.setNextForm(&venusaur);
-    bulbasaur.setNextForm(&ivysaur);
-    Creature pidgeotto = Creature("Pidgeotto", 40,50,40,air,2);
-    Creature pidgeot = Creature("Pidgeot", 50,60,50,air,3);
-    pidgeotto.setNextForm(&pidgeot);
-    pidgey.setNextForm(&pidgeotto);
-    Creature charmeleon = Creature("Charmeleon", 40,50,40,fire,2);
-    Creature charizard = Creature("Charizard", 60,50,50,fire,3);
-    charmeleon.setNextForm(&charizard);
-    charmander.setNextForm(&charmeleon);
-    Creature piloswine = Creature("Piloswine",60,30,60,ice,2);
-    Creature mamoswine = Creature("Mamoswine",70,50,60,ice,3);
-    piloswine.setNextForm(&mamoswine);
-    swinub.setNextForm(&piloswine);
+    Creature venusaur = Creature("Venusaur",50,40,50,earth,3);
+    Creature pidgeotto = Creature("Pidgeotto", 40,40,40,air,2);
+    Creature pidgeot = Creature("Pidgeot", 40,60,40,air,3);
+    Creature charmeleon = Creature("Charmeleon", 30,50,40,fire,2);
+    Creature charizard = Creature("Charizard", 60,40,40,fire,3);
+    Creature piloswine = Creature("Piloswine",60,15,45,ice,2);
+    Creature mamoswine = Creature("Mamoswine",70,15,55,ice,3);
     Creature magneton = Creature("Magneton",40,50,30,steel,2);
     Creature magnezone = Creature("Magnezone", 50, 40, 50,steel,3);
-    magneton.setNextForm(&magnezone);
-    magnemite.setNextForm(&magneton);
+
 
 
 

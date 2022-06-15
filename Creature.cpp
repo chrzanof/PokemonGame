@@ -58,14 +58,6 @@ void Creature::setElemental(const Elemental &elemental) {
     Creature::elemental = elemental;
 }
 
-Creature *Creature::getNextForm() const {
-    return nextForm;
-}
-
-void Creature::setNextForm(Creature *nextForm) {
-    Creature::nextForm = nextForm;
-}
-
 int Creature::getLevel() const {
     return level;
 }
