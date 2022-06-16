@@ -66,12 +66,17 @@ int main() {
     std::cout << "Wybierz 6 stworzen:" << std::endl;
 
     for (int i = 0; i < Player::getMaxCreatures(); ++i) {
-        int number = -1;
-        std::cin >> number;
-        if (!player.isCreaturePresent(creaturesLevel1.at(number), player.getCreatures()))
-            player.addCreature(creaturesLevel1.at(number));
-        else{
-            std::cout << "Posiadasz juz te stworzenie"<< std::endl;
+        try {
+            int number = -1;
+            std::cin >> number;
+            if (!player.isCreaturePresent(creaturesLevel1.at(number), player.getCreatures()))
+                player.addCreature(creaturesLevel1.at(number));
+            else{
+                std::cout << "Posiadasz juz te stworzenie"<< std::endl;
+                i--;
+            }
+        } catch (std::out_of_range e) {
+            std::cout<< "Wrong input!"<<std::endl;
             i--;
         }
 
@@ -91,29 +96,35 @@ int main() {
 
         // tury gracz - przeciwnik
         while (!arena.getEnemy().getCreatures().empty() && !arena.getPlayer().getCreatures().empty()) {
+
             arena.getPlayer().setAvailableCreatures(arena.getPlayer().getCreatures());
             arena.getEnemy().setAvailableCreatures(arena.getEnemy().getCreatures());
             //tura gracz
             while(!arena.getPlayer().getAvailableCreatures().empty() && !arena.getEnemy().getCreatures().empty()) {
-                std::cout << arena;
-                std::cout << arena.getPlayer().getName() << "\'s turn" << std::endl;
-                arena.setPlayerTurnCounter(arena.getPlayerTurnCounter() + 1);
-                int playerCreature = -1, enemyCreature = -1;
-                std::cin >> playerCreature;
-                while(!arena.getPlayer().isCreaturePresent(
-                        const_cast<Creature &>(arena.getPlayer().getCreatures().at(playerCreature)),
-                        arena.getPlayer().getAvailableCreatures())) {
-                    std::cout << arena.getPlayer().getCreatures().at(playerCreature).getName() << " already attacked in this turn"<< std::endl;
+                try {
+                    std::cout << arena;
+                    std::cout << arena.getPlayer().getName() << "\'s turn" << std::endl;
+                    arena.setPlayerTurnCounter(arena.getPlayerTurnCounter() + 1);
+                    int playerCreature = -1, enemyCreature = -1;
                     std::cin >> playerCreature;
+                    while(!arena.getPlayer().isCreaturePresent(
+                            const_cast<Creature &>(arena.getPlayer().getCreatures().at(playerCreature)),
+                            arena.getPlayer().getAvailableCreatures())) {
+                        std::cout << arena.getPlayer().getCreatures().at(playerCreature).getName() << " already attacked in this turn"<< std::endl;
+                        std::cin >> playerCreature;
+                    }
+                    std::cin >> enemyCreature;
+                    double damage = arena.getPlayer().attack(playerCreature,
+                                                             arena.getEnemy().getCreatures().at(enemyCreature));
+                    const_cast<Creature &>(arena.getEnemy().getCreatures().at(
+                            enemyCreature)).tryToEvadeAndTakeDamageIfFailed(damage);
+                    arena.getPlayer().ifFoundDeleteCreature(arena.getPlayer().getCreatures().at(playerCreature),
+                                                            const_cast<std::vector<Creature> &>(arena.getPlayer().getAvailableCreatures()));
+                    arena.getEnemy().updateDeadCreatures();
+                } catch (std::out_of_range e) {
+                    std::cout << "wrong input!"<<std::endl;
                 }
-                std::cin >> enemyCreature;
-                double damage = arena.getPlayer().attack(playerCreature,
-                                                         arena.getEnemy().getCreatures().at(enemyCreature));
-                const_cast<Creature &>(arena.getEnemy().getCreatures().at(
-                        enemyCreature)).tryToEvadeAndTakeDamageIfFailed(damage);
-                arena.getPlayer().ifFoundDeleteCreature(arena.getPlayer().getCreatures().at(playerCreature),
-                                                        const_cast<std::vector<Creature> &>(arena.getPlayer().getAvailableCreatures()));
-                arena.getEnemy().updateDeadCreatures();
+
             }
             //tura przeciwnik
             while (!arena.getEnemy().getAvailableCreatures().empty() && !arena.getPlayer().getCreatures().empty()){
