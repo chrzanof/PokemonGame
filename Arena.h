@@ -16,11 +16,13 @@ public:
 
     Arena(const Player &player, const Enemy &enemy);
 
-    const Player &getPlayer() const;
+
+
+    Player &getPlayer();
 
     void setPlayer(const Player &player);
 
-    const Enemy &getEnemy() const;
+    Enemy &getEnemy();
 
     void setEnemy(const Enemy &enemy);
 
@@ -31,6 +33,10 @@ public:
     int getEnemyTurnCounter() const;
 
     void setEnemyTurnCounter(int enemyTurnCounter);
+
+    friend std::ostream& operator <<(std::ostream &os, const Arena &arena);
+
+    bool checkIfLost(const Player &player);
 
 
 };

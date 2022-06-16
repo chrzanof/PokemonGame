@@ -11,7 +11,13 @@ class Player {
     static const int maxCreatures = 6;
 protected:
     std::string name;
-    std::vector<Creature> creatures;
+    std::vector<Creature> aliveCreatures;
+    std::vector<Creature> deadCreatures;
+    std::vector<Creature> availableCreatures;
+public:
+    const std::vector<Creature> &getAvailableCreatures() const;
+
+    void setAvailableCreatures(const std::vector<Creature> &availableCreatures);
 
 public:
 
@@ -23,14 +29,25 @@ public:
 
     void setName(const std::string &name);
 
-    const std::vector<Creature> &getCreatures() const;
+    const std::vector<Creature> &getCreatures() const ;
 
     void setCreatures(const std::vector<Creature> creatures);
 
+    const std::vector<Creature> &getDeadCreatures() const;
+
+    void setDeadCreatures(const std::vector<Creature> &deadCreatures);
+
     double attack(int playerCreatureNumber,const Creature &creature);
 
-protected:
-    bool isCreaturePresent(Creature &creature);
+    static const int getMaxCreatures();
+
+    bool isCreaturePresent(Creature &creature, const std::vector<Creature> &creatures) const;
+
+    void updateDeadCreatures();
+
+    bool ifFoundDeleteCreature(const Creature &creature, std::vector<Creature>&creatures);
+
+
 
 
 };

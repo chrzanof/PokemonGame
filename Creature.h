@@ -9,7 +9,6 @@
 #include <vector>
 #include <ctime>
 #include "Elemental.h"
-//#include "Creature.h"
 class Creature {
     std::string name;
     int strength;
@@ -18,6 +17,7 @@ class Creature {
     double EXP;
     Elemental elemental;
     int level;
+    bool dead;
 
 public:
     Creature(const std::string &name, int strength, double dexterity, double hp,
@@ -51,9 +51,15 @@ public:
 
     void setLevel(int level);
 
+    bool isDead() const;
+
+    void setDead(bool isDead);
+
     double attack(const Creature &creature);
 
     bool tryToEvadeAndTakeDamageIfFailed(double damage);
+
+    friend std::ostream& operator <<(std::ostream &os, const Creature &creature);
 
 
 };

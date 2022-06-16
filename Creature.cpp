@@ -48,7 +48,7 @@ void Creature::setExp(double exp) {
 
 Creature::Creature(const std::string &name, int strength, double dexterity, double hp,
                    const Elemental &elemental, int level) : name(name), strength(strength), dexterity(dexterity), HP(hp), EXP(0),
-                                                 elemental(elemental), level(level) {}
+                                                 elemental(elemental), level(level) {dead = false;}
 
 const Elemental &Creature::getElemental() const {
     return elemental;
@@ -72,6 +72,7 @@ void Creature::setLevel(int level) {
  * @return damage amount dealt to the creature modified by value returned by Elemental::returnModifier function
  */
 double Creature::attack(const Creature &creature) {
+    std::cout<<name << " attacks "<<creature.name<<std::endl;
     double modifier = this->elemental.returnModifier(creature.elemental);
     if(modifier > 1) std::cout << this->name << " is strong against " << creature.name << std::endl;
     else if( modifier < 1) std::cout << this->name << " is weak against " << creature.name << std::endl;
@@ -82,10 +83,32 @@ bool Creature::tryToEvadeAndTakeDamageIfFailed(double damage) {
     srand(time(NULL));
     if(std::rand() % 100 + 1 > dexterity) {
         HP = HP - damage;
+        if(HP <= 0) {
+            setDead(true);
+            std::cout << name << " died" << std::endl;
+        }
         return false;
     }
     std::cout<< this->name << " evaded the attack!" << std::endl;
     return true;
 }
+
+std::ostream &operator<<(std::ostream &os, const Creature &creature) {
+    return os << creature.name  << " HP: " << std::to_string(creature.HP)
+                                << " S: " << std::to_string(creature.strength)
+                                << " D: " << std::to_string(creature.dexterity)
+                                << " E: " << creature.elemental.getName()
+                                << std::endl;
+}
+
+bool Creature::isDead() const {
+    return dead;
+}
+
+void Creature::setDead(bool isDead) {
+    Creature::dead = isDead;
+}
+
+
 
 

@@ -9,8 +9,8 @@ void Enemy::setRandomCreatures(std::vector<Creature> &creatures) {
 
     for (int i = 0; i < maxCreatures; ++i) {
         int index = rand() % creatures.size();
-        if(!isCreaturePresent(creatures.at(index)))
-            this->creatures.push_back(creatures.at(index));
+        if(isCreaturePresent(creatures.at(index),creatures))
+            this->aliveCreatures.push_back(creatures.at(index));
         else
             i--;
     }
@@ -19,4 +19,8 @@ void Enemy::setRandomCreatures(std::vector<Creature> &creatures) {
 }
 
 Enemy::Enemy(const std::string &name) : Player(name) {}
+
+double Enemy::attack(int playerCreatureNumber, const Creature &creature) {
+    return availableCreatures.at(playerCreatureNumber).attack(creature);
+}
 

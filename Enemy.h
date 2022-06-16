@@ -14,6 +14,8 @@ public:
 
     void setRandomCreatures(std::vector<Creature> &creatures);
 
+    double attack(int playerCreatureNumber,const Creature &creature);
+
 };
 
 
