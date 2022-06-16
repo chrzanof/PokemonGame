@@ -72,7 +72,7 @@ void Player::setDeadCreatures(const std::vector<Creature> &deadCreatures) {
     Player::deadCreatures = deadCreatures;
 }
 
-const std::vector<Creature> &Player::getAvailableCreatures() const {
+ const std::vector<Creature> &Player::getAvailableCreatures() const {
     return availableCreatures;
 }
 
@@ -87,5 +87,14 @@ bool Player::ifFoundDeleteCreature(const Creature &creature, std::vector<Creatur
         if(c.getName() == creature.getName()) {
             creatures.erase(creatures.begin() + count);
         }
+        count++;
     }
 }
+
+void Player::deleteCreature(int index, std::vector<Creature> &creatures) {
+    creatures.erase(creatures.begin() + index);
+}
+
+
+
+

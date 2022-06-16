@@ -15,7 +15,7 @@ protected:
     std::vector<Creature> deadCreatures;
     std::vector<Creature> availableCreatures;
 public:
-    const std::vector<Creature> &getAvailableCreatures() const;
+     const std::vector<Creature> &getAvailableCreatures() const ;
 
     void setAvailableCreatures(const std::vector<Creature> &availableCreatures);
 
@@ -46,6 +46,8 @@ public:
     void updateDeadCreatures();
 
     bool ifFoundDeleteCreature(const Creature &creature, std::vector<Creature>&creatures);
+
+    void deleteCreature(int index, std::vector<Creature>&creatures);
 
 
 
