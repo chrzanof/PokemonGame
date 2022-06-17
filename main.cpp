@@ -1,17 +1,45 @@
 #include <iostream>
 #include "Creature.h"
-#include "Elemental.h"
+//#include "Elemental.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Arena.h"
 #include "GameParams.h"
 #include "Game.h"
 #include <vector>
+#include <fstream>
+#include <string>
+
+void writeToFile(std::string fileName, const std::vector<std::string> &values) {
+    std::ofstream fileOut;
+    fileOut.open(fileName,std::ios::in);
+    if(fileOut.is_open()){
+        for (auto & row: values) {
+            fileOut << row << "\n";
+        }
+        fileOut.close();
+    }
+}
+ const std::vector<std::string> readFromFile(std::string fileName)  {
+    std::fstream fileIn;
+    std::vector<std::string> fileContent;
+    fileIn.open(fileName,std::ios::in);
+    if(fileIn.is_open()){
+        std::string line;
+        while (std::getline(fileIn,line)){
+            fileContent.push_back(line);
+        }
+        fileIn.close();
+    }
+    return fileContent;
+}
+
 int main() {
 
     Game game = Game();
     std::vector<Creature> creaturesLevel1 = game.creatures();
     bool gameOver = false;
+    bool exit = false;
     // wybór poziomu trudności
 
     GameParams gameParams = game.chooseDifficulty();
@@ -58,16 +86,29 @@ int main() {
                 game.levelUpCreatures(arena);
                 player = arena.getPlayer();
                 // możliwy zapis gry
+                std::cout<<"do you want to save progress and exit game?[y/n]"<<std::endl;
+                char answer;
+                std::cin >> answer;
+                if(answer == 'y' || answer == 'Y') {
+                    writeToFile("saves/playerName_rounds_and_defeated_enemies_save.txt", {arena.getPlayer().getName(),std::to_string(roundCounter),std::to_string(enemyCounter),std::to_string(gameParams.difficulty)});
+//                    writeToFile("alive_creatures_save.txt");
+//                    writeToFile("dead_creatures_save.txt");
+//                    writeToFile("available_creatures_save.txt");
+                    std::cout << "progress saved."<<std::endl;
+                    exit = true;
+                    break;
+                }
+
             }
-            if(gameOver) {
+            if(gameOver || exit) {
                 break;
             }
         }
-        if(gameOver){
+        if(gameOver || exit){
             break;
         }
     }
-    if(!gameOver)
+    if(!gameOver && !exit)
         std::cout << "Congratulations, you finished the game!"<< std::endl;
     return 0;
 }

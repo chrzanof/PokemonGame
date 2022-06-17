@@ -10,10 +10,10 @@ void Game::playerTurn(Arena &arena, int &creatureSubstitutions, const std::vecto
     //tura gracz
     while(!arena.getPlayer().getAvailableCreatures().empty() && !arena.getEnemy().getCreatures().empty()) {
         try {
-
             if(creatureSubstitutions < GameParams::MAX_NUMBER_OF_SUBSTITUTIONS && !arena.getPlayer().getDeadCreatures().empty() && count < 1) {
                 changeDeadCreature(arena,count,creatureSubstitutions,gameCreatures);
             }
+
             std::cout << arena;
             std::cout << arena.getPlayer().getName() << "\'s turn" << std::endl;
             arena.setPlayerTurnCounter(arena.getPlayerTurnCounter() + 1);
@@ -58,6 +58,7 @@ void Game::playerTurn(Arena &arena, int &creatureSubstitutions, const std::vecto
                 const_cast<Creature&>(arena.getPlayer().getCreatures().at(playerCreature))
                         .setExp(arena.getPlayer().getCreatures().at(playerCreature).getExp() + GameParams::EXP_PER_KILL);
             }
+
         } catch (std::out_of_range e) {
             std::cout << "wrong input!"<<std::endl;
         }
