@@ -52,6 +52,8 @@ public:
 
     void resetCreaturesHP();
 
+    std::vector<std::string> returnCreaturesInfoAsString(std::vector<Creature> &creatures);
+
 
 
 

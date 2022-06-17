@@ -40,31 +40,48 @@ int main() {
     std::vector<Creature> creaturesLevel1 = game.creatures();
     bool gameOver = false;
     bool exit = false;
+    Player player;
+    GameParams gameParams;
+    std::cout << "1 - New Game"<<std::endl<<"2 - Continue"<<std::endl;
+    int option;
+    std::cin >> option;
+    int enemyCounter;
+    if(option == 2) {
+        const std::vector<std::string> v1 = readFromFile("saves/playerName_rounds_and_defeated_enemies_save.txt");
+        const std::vector<std::string> v2 = readFromFile("saves/alive_creatures_save.txt");
+        const std::vector<std::string> v3 = readFromFile("saves/dead_creatures_save.txt");
+        const std::vector<std::string> v4 = readFromFile("saves/available_creatures_save.txt");
+        game.loadGame(player, gameParams, enemyCounter, v1,v2,v3,v4);
+    } else {
+        gameParams = game.chooseDifficulty();
+        //wybór stworzen przez gracza
+        player = Player("player");
+        game.chooseCreaturesForPlayer(player, creaturesLevel1);
+        enemyCounter = 0;
+    }
     // wybór poziomu trudności
 
-    GameParams gameParams = game.chooseDifficulty();
 
-    //wybór stworzen przez gracza
-    Player player = Player("player");
-    game.chooseCreaturesForPlayer(player, creaturesLevel1);
-
+    bool firstLoop = true;
     //główna pętla gry
-    int roundCounter = 0;
     //pętla rund
     while (Arena::round < GameParams::NUMBER_OF_ROUNDS) {
         int creatureSubstitutions = 0;
-        roundCounter++;
-        for (auto &creature : player.getDeadCreatures()) {
-            player.addCreature(creature);
+
+        if(!firstLoop) {
+            enemyCounter = 0;
+            for (auto &creature : player.getDeadCreatures()) {
+                player.addCreature(creature);
+            }
+            const_cast<std::vector<Creature>&>(player.getDeadCreatures()).clear();
+            player.resetCreaturesHP();
         }
-        const_cast<std::vector<Creature>&>(player.getDeadCreatures()).clear();
-        player.resetCreaturesHP();
         Arena arena = Arena();
         arena.setPlayer(player);
-        int enemyCounter = 0;
         //petla przeciwników
         while (enemyCounter < gameParams.getNumberOfEnemiesPerRound() && !arena.getPlayer().getCreatures().empty()) {
             enemyCounter++;
+            firstLoop = false;
             arena.setEnemy(Enemy("enemy" + std::to_string(enemyCounter)));
             arena.getEnemy().setRandomCreatures(creaturesLevel1, gameParams);
 
@@ -90,10 +107,13 @@ int main() {
                 char answer;
                 std::cin >> answer;
                 if(answer == 'y' || answer == 'Y') {
-                    writeToFile("saves/playerName_rounds_and_defeated_enemies_save.txt", {arena.getPlayer().getName(),std::to_string(roundCounter),std::to_string(enemyCounter),std::to_string(gameParams.difficulty)});
-//                    writeToFile("alive_creatures_save.txt");
-//                    writeToFile("dead_creatures_save.txt");
-//                    writeToFile("available_creatures_save.txt");
+                    writeToFile("saves/playerName_rounds_and_defeated_enemies_save.txt", {arena.getPlayer().getName(),std::to_string(Arena::round),std::to_string(enemyCounter),std::to_string(gameParams.difficulty)});
+                    writeToFile("saves/alive_creatures_save.txt",arena.getPlayer().returnCreaturesInfoAsString(
+                            const_cast<std::vector<Creature> &>(arena.getPlayer().getCreatures())));
+                    writeToFile("saves/dead_creatures_save.txt",arena.getPlayer().returnCreaturesInfoAsString(
+                            const_cast<std::vector<Creature> &>(arena.getPlayer().getDeadCreatures())));
+                    writeToFile("saves/available_creatures_save.txt", arena.getPlayer().returnCreaturesInfoAsString(
+                            const_cast<std::vector<Creature> &>(arena.getPlayer().getAvailableCreatures())));
                     std::cout << "progress saved."<<std::endl;
                     exit = true;
                     break;

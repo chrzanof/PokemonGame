@@ -129,6 +129,12 @@ void Creature::levelUp(int attribute) {
 
 }
 
+Creature::Creature(const std::string &name, int strength, double dexterity, double hp, double maxHp, double exp,
+                   const Elemental &elemental, int level, bool dead) : name(name), strength(strength),
+                                                                       dexterity(dexterity), HP(hp), maxHP(maxHp),
+                                                                       EXP(exp), elemental(elemental), level(level),
+                                                                       dead(dead) {}
+
 
 
 

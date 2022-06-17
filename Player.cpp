@@ -107,6 +107,22 @@ void Player::resetCreaturesHP() {
 
 }
 
+std::vector<std::string> Player::returnCreaturesInfoAsString(std::vector<Creature> &creatures) {
+    std::vector<std::string> strVector;
+    for(auto & c : creatures) {
+        strVector.push_back(c.getName());
+        strVector.push_back(std::to_string(c.getStrength()));
+        strVector.push_back(std::to_string(c.getDexterity()));
+        strVector.push_back(std::to_string(c.getHp()));
+        strVector.push_back(std::to_string(c.getMaxHp()));
+        strVector.push_back(std::to_string(c.getExp()));
+        strVector.push_back(c.getElemental().getName());
+        strVector.push_back(std::to_string(c.getLevel()));
+        strVector.push_back(std::to_string(c.isDead()));
+    }
+    return strVector;
+}
+
 
 
 

@@ -22,6 +22,8 @@ public:
     };
     Difficulty difficulty;
 
+    GameParams();
+
     GameParams(Difficulty difficulty);
 
      int getNumberOfEnemiesPerRound();

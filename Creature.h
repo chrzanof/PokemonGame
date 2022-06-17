@@ -24,9 +24,14 @@ public:
     Creature(const std::string &name, int strength, double dexterity, double hp,
              const Elemental &elemental,int level);
 
+    Creature(const std::string &name, int strength, double dexterity, double hp, double maxHp, double exp,
+             const Elemental &elemental, int level, bool dead);
+
     const std::string &getName() const;
 
     void setName(const std::string &name);
+
+
 
     int getStrength() const;
 

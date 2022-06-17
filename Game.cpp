@@ -18,6 +18,7 @@ void Game::playerTurn(Arena &arena, int &creatureSubstitutions, const std::vecto
             std::cout << arena.getPlayer().getName() << "\'s turn" << std::endl;
             arena.setPlayerTurnCounter(arena.getPlayerTurnCounter() + 1);
             int playerCreature = -1, enemyCreature = -1;
+            std::cout << "choose your creature:";
             std::cin >> playerCreature;
             while(!arena.getPlayer().isCreaturePresent(
                     const_cast<Creature &>(arena.getPlayer().getCreatures().at(playerCreature)),
@@ -25,6 +26,7 @@ void Game::playerTurn(Arena &arena, int &creatureSubstitutions, const std::vecto
                 std::cout << arena.getPlayer().getCreatures().at(playerCreature).getName() << " already attacked in this turn"<< std::endl;
                 std::cin >> playerCreature;
             }
+            std::cout << "choose enemy creature:";
             std::cin >> enemyCreature;
             double creatureHp = arena.getEnemy().getCreatures().at(enemyCreature).getHp();
             double creatureMaxHp = arena.getEnemy().getCreatures().at(enemyCreature).getMaxHp();
@@ -218,6 +220,95 @@ std::vector<Creature> Game::creatures() {
 
 
     return {squirtle,bulbasaur,pidgey,charmander,swinub,magnemite,caterpie,psyduck,zubat,vulpix,seel,aron,wartortle,ivysaur,pidgeotto};
+}
+
+void Game::loadGame(Player &player, GameParams &params, int &enemyCounter, const std::vector<std::string> gameProgress,
+                    const std::vector<std::string> aliveCreatures, const std::vector<std::string> deadCreatures,
+                    const std::vector<std::string> availableCreatures) {
+
+    player.setName(gameProgress.front());
+    Arena arena = Arena();
+    arena.round = std::stoi(gameProgress.at(1)) - 1;
+    enemyCounter = std::stoi(gameProgress.at(2));
+    params.difficulty = static_cast<GameParams::Difficulty>(std::stoi(gameProgress.at(3)));
+
+    std::vector<Creature> aliveCreaturesVector;
+    for (int i = 0; i < aliveCreatures.size(); i+=9) {
+        Creature creature = Creature(
+                aliveCreatures.at(i),
+                std::stoi(aliveCreatures.at(i+1)),
+                std::stod(aliveCreatures.at(i+2)),
+                std::stod(aliveCreatures.at(i+3)),
+                std::stod(aliveCreatures.at(i+4)),
+                std::stod(aliveCreatures.at(i+5)),
+                findElementalByName(aliveCreatures.at(i+6)),
+                std::stoi(aliveCreatures.at(i+7)),
+                false
+                );
+        aliveCreaturesVector.push_back(creature);
+    }
+    player.setCreatures(aliveCreaturesVector);
+    std::vector<Creature> deadCreaturesVector;
+    for (int i = 0; i < deadCreatures.size(); i+=9) {
+        Creature creature = Creature(
+                deadCreatures.at(i),
+                std::stoi(deadCreatures.at(i+1)),
+                std::stod(deadCreatures.at(i+2)),
+                std::stod(deadCreatures.at(i+3)),
+                std::stod(deadCreatures.at(i+4)),
+                std::stod(deadCreatures.at(i+5)),
+                findElementalByName(deadCreatures.at(i+6)),
+                std::stoi(deadCreatures.at(i+7)),
+                true
+        );
+        deadCreaturesVector.push_back(creature);
+    }
+    player.setDeadCreatures(deadCreaturesVector);
+    std::vector<Creature> availableCreaturesVector;
+    for (int i = 0; i < availableCreatures.size(); i+=9) {
+        Creature creature = Creature(
+                availableCreatures.at(i),
+                std::stoi(availableCreatures.at(i+1)),
+                std::stod(availableCreatures.at(i+2)),
+                std::stod(availableCreatures.at(i+3)),
+                std::stod(availableCreatures.at(i+4)),
+                std::stod(availableCreatures.at(i+5)),
+                findElementalByName(availableCreatures.at(i+6)),
+                std::stoi(availableCreatures.at(i+7)),
+                false
+        );
+        availableCreaturesVector.push_back(creature);
+    }
+    player.setAvailableCreatures(availableCreaturesVector);
+}
+
+Elemental Game::findElementalByName(std::string name) {
+    Elemental water = Elemental("water", SpecialAttack("Tsunami",100));
+    Elemental earth = Elemental("earth", SpecialAttack("EarthQuake",100));
+    Elemental air = Elemental("air", SpecialAttack("Tornado",100));
+    Elemental fire = Elemental("fire", SpecialAttack("Lava Attack",100));
+    Elemental ice = Elemental("ice", SpecialAttack("Frost",100));
+    Elemental steel = Elemental("steel", SpecialAttack("steelFist",100));
+
+    water.addWeakness(water);
+    water.setStrengths({earth, fire});
+    earth.addWeakness(air);
+    earth.setStrengths({fire, ice, steel});
+    air.setWeaknesses({earth, steel});
+    air.addStrength(ice);
+    fire.setWeaknesses({water, earth});
+    fire.setStrengths({ice, steel});
+    ice.setWeaknesses({water, fire, ice});
+    ice.addStrength(earth);
+    steel.setWeaknesses({fire, steel});
+    steel.setStrengths({water, earth});
+    std::vector<Elemental> v {water,earth,air,fire,ice,steel};
+    for (auto & el: v) {
+        if(el.getName() == name) {
+            return el;
+        }
+    }
+    return Elemental("",SpecialAttack("",0));
 }
 
 

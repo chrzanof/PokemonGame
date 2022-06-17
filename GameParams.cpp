@@ -16,3 +16,5 @@ GameParams::GameParams(GameParams::Difficulty difficulty) : difficulty(difficult
  int GameParams::getNumberOfEnemyCreatures() {
     return NUMBER_OF_ENEMY_CREATURES + difficulty;
 }
+
+GameParams::GameParams() {}

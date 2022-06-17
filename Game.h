@@ -16,6 +16,11 @@ public:
     GameParams chooseDifficulty();
     void chooseCreaturesForPlayer(Player &player, const std::vector<Creature> &gameCreatures);
     std::vector<Creature> creatures();
+    Elemental findElementalByName(std::string name);
+
+    void loadGame(Player &player, GameParams &params,int &enemyCounter, const std::vector<std::string> gameProgress,
+                  const std::vector<std::string> aliveCreatures, const std::vector<std::string> deadCreatures,
+                  const std::vector<std::string> availableCreatures);
 };
 
 
