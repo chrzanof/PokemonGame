@@ -7,16 +7,23 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "SpecialAttack.h"
 
 class Elemental {
     std::string name;
     std::vector<Elemental> weaknesses;
     std::vector<Elemental> strengths;
+    SpecialAttack specialAttack;
+
+
 public:
     static constexpr double WEAKNESS_MODIFIER = 0.75;
     static constexpr double STRENGTH_MODIFIER = 1.25;
 
-    Elemental(const std::string &name);
+    Elemental(const std::string &name, SpecialAttack specialAttack);
+    const SpecialAttack &getSpecialAttack() const;
+
+    void setSpecialAttack(const SpecialAttack &specialAttack);
 
     const std::string &getName() const;
 

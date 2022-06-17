@@ -4,7 +4,7 @@
 
 #include "Elemental.h"
 
-Elemental::Elemental(const std::string &name) : name(name) {}
+Elemental::Elemental(const std::string &name, SpecialAttack specialAttack) : name(name), specialAttack(specialAttack) {}
 
 const std::string &Elemental::getName() const {
     return name;
@@ -57,6 +57,14 @@ double Elemental::returnModifier(const Elemental &elemental) {
         }
     }
     return 1;
+}
+
+const SpecialAttack &Elemental::getSpecialAttack() const {
+    return specialAttack;
+}
+
+void Elemental::setSpecialAttack(const SpecialAttack &specialAttack) {
+    Elemental::specialAttack = specialAttack;
 }
 
 
