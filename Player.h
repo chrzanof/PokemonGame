@@ -20,6 +20,7 @@ public:
     void setAvailableCreatures(const std::vector<Creature> &availableCreatures);
 
 public:
+    Player();
 
     Player(const std::string &name);
 
@@ -43,11 +44,13 @@ public:
 
     bool isCreaturePresent(Creature &creature, const std::vector<Creature> &creatures) const;
 
-    void updateDeadCreatures();
+    bool updateDeadCreatures();
 
     bool ifFoundDeleteCreature(const Creature &creature, std::vector<Creature>&creatures);
 
     void deleteCreature(int index, std::vector<Creature>&creatures);
+
+    void resetCreaturesHP();
 
 
 

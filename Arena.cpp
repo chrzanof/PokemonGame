@@ -7,6 +7,7 @@ int Arena::round = 0;
 
 Arena::Arena(const Player &player, const Enemy &enemy) : player(player), enemy(enemy) ,playerTurnCounter(0), enemyTurnCounter(0){round++;}
 
+
 Player & Arena::getPlayer()  {
     return player;
 }
@@ -79,3 +80,7 @@ bool Arena::checkIfLost(const Player &player) {
     }
     return true;
 }
+
+Arena::Arena() : playerTurnCounter(0), enemyTurnCounter(0) {round++;}
+
+

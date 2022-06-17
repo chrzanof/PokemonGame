@@ -48,7 +48,7 @@ void Creature::setExp(double exp) {
 
 Creature::Creature(const std::string &name, int strength, double dexterity, double hp,
                    const Elemental &elemental, int level) : name(name), strength(strength), dexterity(dexterity), HP(hp), EXP(0),
-                                                 elemental(elemental), level(level) {dead = false;}
+                                                 elemental(elemental), level(level), maxHP(hp) {dead = false;}
 
 const Elemental &Creature::getElemental() const {
     return elemental;
@@ -107,6 +107,26 @@ bool Creature::isDead() const {
 
 void Creature::setDead(bool isDead) {
     Creature::dead = isDead;
+}
+
+double Creature::getMaxHp() const {
+    return maxHP;
+}
+
+void Creature::setMaxHp(double maxHp) {
+    maxHP = maxHp;
+}
+
+void Creature::levelUp(int attribute) {
+    if(attribute == 1) {
+        setMaxHp(getMaxHp() + 10);
+        setHp(getMaxHp());
+    } else if (attribute == 2){
+        setStrength(getStrength() + 10);
+    } else {
+        setDexterity(getDexterity() + 10);
+    }
+
 }
 
 

@@ -14,6 +14,7 @@ class Creature {
     int strength;
     double dexterity;
     double HP;
+    double maxHP;
     double EXP;
     Elemental elemental;
     int level;
@@ -39,6 +40,10 @@ public:
 
     void setHp(double hp);
 
+    double getMaxHp() const;
+
+    void setMaxHp(double maxHp);
+
     double getExp() const;
 
     void setExp(double exp);
@@ -60,6 +65,8 @@ public:
     bool tryToEvadeAndTakeDamageIfFailed(double damage);
 
     friend std::ostream& operator <<(std::ostream &os, const Creature &creature);
+
+    void levelUp(int attribute);
 
 
 };

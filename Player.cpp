@@ -52,16 +52,19 @@ const int Player::getMaxCreatures() {
     return maxCreatures;
 }
 
-void Player::updateDeadCreatures() {
+bool Player::updateDeadCreatures() {
+    bool died = false;
     int count = 0;
     for (auto &creature: getCreatures()) {
         if(creature.getHp() <= 0) {
             deadCreatures.push_back(creature);
             ifFoundDeleteCreature(creature,availableCreatures);
             aliveCreatures.erase(aliveCreatures.begin() + count);
+            died = true;
         }
         count++;
     }
+    return died;
 }
 
 const std::vector<Creature> &Player::getDeadCreatures() const {
@@ -93,6 +96,15 @@ bool Player::ifFoundDeleteCreature(const Creature &creature, std::vector<Creatur
 
 void Player::deleteCreature(int index, std::vector<Creature> &creatures) {
     creatures.erase(creatures.begin() + index);
+}
+
+Player::Player() {}
+
+void Player::resetCreaturesHP() {
+    for (auto & creature: aliveCreatures) {
+        creature.setHp(creature.getMaxHp());
+    }
+
 }
 
 

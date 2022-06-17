@@ -14,6 +14,8 @@ class Arena {
 public:
     static int round;
 
+    Arena();
+
     Arena(const Player &player, const Enemy &enemy);
 
 
