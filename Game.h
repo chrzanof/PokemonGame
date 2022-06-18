@@ -8,14 +8,23 @@
 
 
 class Game {
+    std::vector<Creature> gameCreatures;
+    std::vector<Elemental> elementals;
 public:
+    Game();
+
+    void setGameCreatures(const std::vector<Creature> &gameCreatures);
+    const std::vector<Elemental> &getElementals() const;
+    void setElementals(const std::vector<Elemental> &elementals);
+    std::vector<Creature> creatures();
+
     void playerTurn(Arena &arena, int &creatureSubstitutions, const std::vector<Creature> &gameCreatures);
     void enemyTurn(Arena &arena);
     void changeDeadCreature(Arena &arena, int &count,int &creatureSubstitutions, const std::vector<Creature> &gameCreatures);
     void levelUpCreatures(Arena &arena);
     GameParams chooseDifficulty();
     void chooseCreaturesForPlayer(Player &player, const std::vector<Creature> &gameCreatures);
-    std::vector<Creature> creatures();
+
     Elemental findElementalByName(std::string name);
 
     void loadGame(Player &player, GameParams &params,int &enemyCounter, const std::vector<std::string> gameProgress,
