@@ -35,10 +35,15 @@ public:
     int getEnemyTurnCounter() const;
 
     void setEnemyTurnCounter(int enemyTurnCounter);
-
+/**
+ * returns all information about arena - enemy and his creatures on top, player and his creatures at bottom
+ * also round number. toString() equivalent.
+ * @param os
+ * @param arena
+ * @return os
+ */
     friend std::ostream& operator <<(std::ostream &os, const Arena &arena);
 
-    bool checkIfLost(const Player &player);
 
 
 };

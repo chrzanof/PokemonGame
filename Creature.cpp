@@ -66,11 +66,7 @@ void Creature::setLevel(int level) {
     Creature::level = level;
 }
 
-/**
- * return modified strength value and writes whether attack was strong or weak against enemy;
- * @param creature
- * @return damage amount dealt to the creature modified by value returned by Elemental::returnModifier function
- */
+
 double Creature::attack(const Creature &creature) {
     std::cout<<name << " attacks "<<creature.name<<std::endl;
     double modifier = this->elemental.returnModifier(creature.elemental);

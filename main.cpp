@@ -9,7 +9,11 @@
 #include <vector>
 #include <fstream>
 #include <string>
-
+/**
+ * writes in given file every value of values vector as separate line in fileName
+ * @param fileName
+ * @param values
+ */
 void writeToFile(std::string fileName, const std::vector<std::string> &values) {
     std::ofstream fileOut;
     fileOut.open(fileName,std::ios::in);
@@ -20,6 +24,11 @@ void writeToFile(std::string fileName, const std::vector<std::string> &values) {
         fileOut.close();
     }
 }
+/**
+ * reads every row of given file and pushes it into vector
+ * @param fileName
+ * @return fileContent vector of strings
+ */
  const std::vector<std::string> readFromFile(std::string fileName)  {
     std::fstream fileIn;
     std::vector<std::string> fileContent;
@@ -54,7 +63,7 @@ int main() {
         game.loadGame(player, gameParams, enemyCounter, v1,v2,v3,v4);
     } else {
         gameParams = game.chooseDifficulty();
-        //wybór stworzen przez gracza
+        //player chooses creatures
         player = Player("player");
         game.chooseCreaturesForPlayer(player, creaturesLevel1);
         enemyCounter = 0;
@@ -63,8 +72,8 @@ int main() {
 
 
     bool firstLoop = true;
-    //główna pętla gry
-    //pętla rund
+    //main game loop
+    //round loop
     while (Arena::round < GameParams::NUMBER_OF_ROUNDS) {
         int creatureSubstitutions = 0;
 
@@ -78,14 +87,14 @@ int main() {
         }
         Arena arena = Arena();
         arena.setPlayer(player);
-        //petla przeciwników
+        //enemy loop
         while (enemyCounter < gameParams.getNumberOfEnemiesPerRound() && !arena.getPlayer().getCreatures().empty()) {
             enemyCounter++;
             firstLoop = false;
             arena.setEnemy(Enemy("enemy" + std::to_string(enemyCounter)));
             arena.getEnemy().setRandomCreatures(creaturesLevel1, gameParams);
 
-            // tury gracz - przeciwnik
+            //player - enemy turns
             while (!arena.getEnemy().getCreatures().empty() && !arena.getPlayer().getCreatures().empty()) {
                 arena.getPlayer().setAvailableCreatures(arena.getPlayer().getCreatures());
                 arena.getEnemy().setAvailableCreatures(arena.getEnemy().getCreatures());
@@ -99,10 +108,10 @@ int main() {
                 break;
             } else {
                 std::cout<<"You won against " << arena.getEnemy().getName() << std::endl;
-                // ewolucja stworzenia
+                // creature level up
                 game.levelUpCreatures(arena);
                 player = arena.getPlayer();
-                // możliwy zapis gry
+                // save game
                 std::cout<<"do you want to save progress and exit game?[y/n]"<<std::endl;
                 char answer;
                 std::cin >> answer;

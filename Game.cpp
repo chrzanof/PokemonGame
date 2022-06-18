@@ -7,7 +7,6 @@
 
 void Game::playerTurn(Arena &arena, int &creatureSubstitutions, const std::vector<Creature> &gameCreatures) {
     int count = 0;
-    //tura gracz
     while(!arena.getPlayer().getAvailableCreatures().empty() && !arena.getEnemy().getCreatures().empty()) {
         try {
             if(creatureSubstitutions < GameParams::MAX_NUMBER_OF_SUBSTITUTIONS && !arena.getPlayer().getDeadCreatures().empty() && count < 1) {
@@ -30,7 +29,7 @@ void Game::playerTurn(Arena &arena, int &creatureSubstitutions, const std::vecto
             std::cin >> enemyCreature;
             double creatureHp = arena.getEnemy().getCreatures().at(enemyCreature).getHp();
             double creatureMaxHp = arena.getEnemy().getCreatures().at(enemyCreature).getMaxHp();
-            //attack specialny jeśli HP stworznia jest <= 33.3% maxHP
+            //special attack if HP of enemy creature <= 33.3% maxHP
             if(creatureHp <= creatureMaxHp / 3) {
                 std::cout << "do you want do end creature with special attack?[y/n]" << std::endl;
                 char answer;
@@ -159,7 +158,7 @@ void Game::chooseCreaturesForPlayer(Player &player, const std::vector<Creature> 
     for(int i = 0; i < gameCreatures.size(); i++) {
         std:: cout<< i << "." << gameCreatures.at(i);
     }
-    std::cout << "Choose 6 creatures:" << std::endl;
+    std::cout << "Choose " <<GameParams::MAX_PLAYER_CREATURES << " creatures:" << std::endl;
 
     for (int i = 0; i < GameParams::MAX_PLAYER_CREATURES; ++i) {
         try {

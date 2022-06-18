@@ -40,7 +40,12 @@ public:
     void addWeakness(Elemental elemental);
 
     void addStrength(Elemental elemental);
-
+/**
+ * if parameter exists in weaknesses then returns weakness modifier, if parameter exists in strengths then
+ * returns strength modifier, otherwise returns 1
+ * @param elemental
+ * @return 1, WEAKNESS_MODIFIER or STRENGTH_MODIFIER
+ */
     double returnModifier(const Elemental &elemental);
 
 

@@ -38,12 +38,7 @@ void Elemental::addWeakness(Elemental elemental) {
 void Elemental::addStrength(Elemental elemental) {
     strengths.push_back(elemental);
 }
-/**
- * if parameter exists in weaknesses then returns weakness modifier, if parameter exists in strengths then
- * returns strength modifier, otherwise returns 1
- * @param elemental
- * @return 1, WEAKNESS_MODIFIER or STRENGTH_MODIFIER
- */
+
 double Elemental::returnModifier(const Elemental &elemental) {
 
     for (auto & weakness : weaknesses) {

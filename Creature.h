@@ -64,13 +64,29 @@ public:
     bool isDead() const;
 
     void setDead(bool isDead);
-
+/**
+ * return modified strength value and writes whether attack was strong or weak against enemy;
+ * @param creature
+ * @return damage amount dealt to the creature modified by value returned by Elemental::returnModifier function
+ */
     double attack(const Creature &creature);
-
+/**
+ * if random value is greater then dexterity then creature doesn't evade the attack and reduces HP by damage
+ * @param damage
+ * @return true if evades , false if doesn't
+ */
     bool tryToEvadeAndTakeDamageIfFailed(double damage);
-
+/**
+ * writes info about creature
+ * @param os
+ * @param creature
+ * @return os
+ */
     friend std::ostream& operator <<(std::ostream &os, const Creature &creature);
-
+/**
+ * increases selected field(HP, strength or dexterity) by 10
+ * @param attribute
+ */
     void levelUp(int attribute);
 
 

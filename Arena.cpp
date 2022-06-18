@@ -73,13 +73,6 @@ std::ostream &operator<<(std::ostream &os, const Arena &arena) {
     return os;
 }
 
-bool Arena::checkIfLost(const Player &player) {
-    for (auto &creature: player.getCreatures()) {
-        if(creature.getHp() > 0)
-            return false;
-    }
-    return true;
-}
 
 Arena::Arena() : playerTurnCounter(0), enemyTurnCounter(0) {round++;}
 

@@ -48,9 +48,6 @@ bool Player::isCreaturePresent(Creature &creature,const std::vector<Creature> &c
     return false;
 }
 
-const int Player::getMaxCreatures() {
-    return maxCreatures;
-}
 
 bool Player::updateDeadCreatures() {
     bool died = false;

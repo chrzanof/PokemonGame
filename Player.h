@@ -40,18 +40,29 @@ public:
 
     double attack(int playerCreatureNumber,const Creature &creature);
 
-    static const int getMaxCreatures();
-
     bool isCreaturePresent(Creature &creature, const std::vector<Creature> &creatures) const;
-
+/**
+ * moves creatures with HP < 0 from aliveCreatures to deadCreatures
+ * @return true if found creature with HP < 0
+ */
     bool updateDeadCreatures();
-
+/**
+ * check if creature is present in creatures (compares by name) and deletes it if finds it
+ * @param creature
+ * @param creatures
+ * @return true if deleted, false if didn't
+ */
     bool ifFoundDeleteCreature(const Creature &creature, std::vector<Creature>&creatures);
 
     void deleteCreature(int index, std::vector<Creature>&creatures);
 
     void resetCreaturesHP();
-
+/**
+ * converts every creature's field into string and  pushes it into vector of strings. This is used to prepare
+ * string vector to write it to file.
+ * @param creatures
+ * @return strVector
+ */
     std::vector<std::string> returnCreaturesInfoAsString(std::vector<Creature> &creatures);
 
 
